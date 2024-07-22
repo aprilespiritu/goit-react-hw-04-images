@@ -71,56 +71,39 @@ const fetchImages = async () => {
       toast.error('Oops, something went wrong! Reload this page!');
     } finally {
       //Resets loading state once API request is complete
-      this.setState({ isLoading: false });
+      setIsLoading(false);
     }
   };
 
-
-    
-
-  }
-      
-
-      
-      
-      
-      
-
-      
-  handleSearchSubmit = e => {
+  const handleSearchSubmit = e => {
     e.preventDefault();
 
-    const { search } = this.state;
     const newSearch = e.target.search.value.trim().toLowerCase();
 
     //Check if new search
     if (newSearch !== search) {
       this.setState({
-        search: newSearch,
-        page: 1,
-        images: []
-      });
-    } 
-  };
+        setSearch(newSearch);
+        setPage(1);
+        setImages([]);
+      }
+    }; 
 
-  handleLoadMore = () => {
+  const handleLoadMore = () => {
     //Load more images
-    this.setState(prevState => ({ page: prevState.page + 1 }));
+    setPage(prevPage => prevPage + 1);
   };
 
-  render() {
-    const { images, isLoading, isError, isEnd } = this.state;
-    return (
-      <div className={css.App}>
-        <Searchbar onSubmit={this.handleSearchSubmit} />
-        {/*Render ImageGallery*/}
-        {images.length >= 1 && <ImageGallery images={images} />}
-        {/*Render Load More Button*/}
-        {images.length >= 1 && !isEnd && <Button onClick={this.handleLoadMore} />}
-        {isLoading && <Loader />}
-        {isError && toast.error('Oops, something went wrong! Reload this page!')}
-        <Toaster position="top-center" reverseOrder={false} />
-      </div>
-    );
-  }
-}
+  return (
+    <div className={css.App}>
+      <Searchbar onSubmit={handleSearchSubmit} />
+      {/*Render ImageGallery*/}
+      {images.length >= 1 && <ImageGallery images={images} />}
+      {/*Render Load More Button*/}
+      {images.length >= 1 && !isEnd && <Button onClick={handleLoadMore} />}
+      {isLoading && <Loader />}
+      {isError && toast.error('Oops, something went wrong! Reload this page!')}
+      <Toaster position="top-center" reverseOrder={false} />
+    </div>
+  );
+};
