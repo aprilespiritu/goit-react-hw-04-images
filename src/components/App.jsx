@@ -1,69 +1,73 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Searchbar } from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Button from './Button/Button';
 import Loader from './Loader/Loader';
 import { getAPI } from 'pixabay-api';
 import css from './App.module.css';
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 
 export const App = () => {
-  state = {
-    images: [],
-    page: 1,
-    search: '',
-    isLoading: false,
-    isError: false,
-    isEnd: false,
-  };
+  const [images, setImages] = useState([]);
+  const [page, setPage] = useState(1);
+  const [search, setSearch] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [isEnd, setIsEnd] = useState(false);
 
-  async componentDidUpdate(_prevProps, prevState) {
-    const { search, page } = this.state;
+};
 
-    //Fetch new image when search or page changes 
-    if (prevState.search !== search || prevState.page !== page) {
-      await this.fetchImages(search, page);
-    }
-  };
+useEffect(() => {
+  if (search === '') return;
+  (async () => {
+    await fetchImages(search, page)
+  })();
   
-  fetchImages = async (search, page) => {
-    try {
-      this.setState({ isLoading: true });
-      //Fetch images from API
-      const response = await getAPI(search, page);
-      const { totalHits, hits } = response;
-      console.log(hits, totalHits);
+  return () => { };
+}, [search, page]);
+    
+  
+const fetchImages = async () => {
+  setIsLoading(true);
+  
+  try {
+    //Fetch images from API
+    const response = await getAPI(search, page);
+    const { totalHits, hits } = response;
+    console.log(hits, totalHits);
+    
+    //Checks if API returns images for the search query
+    if (hits.length === 0) {
+      toast.error('Sorry, there are no images found.Please try again.');
+      setIsLoading(false);
+      return;
+    }
 
-      //Checks if API returns images for the search query
-      if (hits.length === 0) {
-        toast.error('Sorry, there are no images found.Please try again.');
-        return;
-      }
-      
-      //Displays message when first page is loaded
-      if (page === 1) {
-        toast.success(`Hooray! We found ${totalHits} images!`);
-      }
+    //Displays message when first page is loaded
+    if (page === 1) {
+      toast.success(`Hooray! We found ${totalHits} images!`);
+    }
 
-      //Checks if all found images have been shown
-      if (page * 12 >= totalHits) {
-        this.setState({ isEnd: true });
-        toast("You have reached the end of your search results.", {
-          icon: '👏',
-          style: {
-            borderRadius: '10px',
-            background: '#333',
-            color: '#fff',
-          },
-        });
-      }
+    //Checks if all found images have been shown
+    if (page * 12 >= totalHits) {
+      setIsEnd(true);
+      toast("You have reached the end of your search results.", {
+        icon: '👏',
+        style: {
+          borderRadius: '10px',
+          background: '#333',
+          color: '#fff',
+        },
+      });
+    }
 
-      this.setState(prevState => ({
-        images: [...prevState.images, ...hits],
-      }));
-    } catch {
+    setImages(prevImages => 
+      page === 1 ? hits : [...prevImages, ...hits],
+    );
+    setIsEnd(prevIsEnd => images.length + hits.length >= totalHits); 
+  } catch (error) {
       //Handle errors 
-      this.setState({ isError: true });
+      setIsError(true);
       toast.error('Oops, something went wrong! Reload this page!');
     } finally {
       //Resets loading state once API request is complete
@@ -71,6 +75,18 @@ export const App = () => {
     }
   };
 
+
+    
+
+  }
+      
+
+      
+      
+      
+      
+
+      
   handleSearchSubmit = e => {
     e.preventDefault();
 
