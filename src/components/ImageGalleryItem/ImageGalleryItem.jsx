@@ -1,31 +1,31 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Modal from '../Modal/Modal';
+import SearchModal from 'components/Modal/Modal';
 import css from './ImageGalleryItem.module.css';
-import { useToggle } from 'hooks/useToggle';
 
-const ImageGalleryItem = ({ image }) => {
-    const { webformatURL, largeImageURL, tags } = image;
-    const { showModal, toggle } = useToggle();
+export const ImageGalleryItem = ({ webformatURL, largeImageURL, tags }) => {
+    const [selectedImage, setSelectedImage] = useState(null);
     
-    useEffect(() => {
-        const gallery = document.querySelector('.js-gallery');
+    const handleModalOpen = () => {
+        setSelectedImage(largeImageURL);
+    };
 
-        if (!gallery) return;
-
-        if (showModal) {
-            console.log('Modal is now shown.');
-            gallery.style.pointerEvents = 'none';
-        } else {
-            console.log('Modal is now hidden.');
-            gallery.style.pointerEvents = 'auto';
-        }
-    }, [showModal]);
+    const handleModalClose = () => {
+        setSelectedImage(null);
+    };
 
     return (
-        <li className={css.galleryItem} onClick={toggle}>
-            <img src={webformatURL} alt={tags} />
-            {showModal && (<Modal image={largeImageURL} tags={tags} onClose={toggle} />)}
+        <li className={css.galleryItem} onClick={handleModalOpen}>
+            <img
+                src={webformatURL}
+                alt={tags}
+            />
+            {showModal && (
+                <SearchModal
+                    image={largeImageURL}
+                    tags={tags}
+                    onClose={handleModalClose}
+                />)}
         </li>
     );
 };
@@ -37,5 +37,3 @@ ImageGalleryItem.propTypes = {
         tags: PropTypes.string,
     }).isRequired,
 };
-
-export default ImageGalleryItem;

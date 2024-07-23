@@ -4,7 +4,7 @@ import css from './ImageGallery.module.css';
 
 const ImageGallery = ({ images }) => {
     return (
-        <ul className={`${css.gallery} js-gallery`}>
+        <ul className={css.gallery}>
             {images.map(image => (
             <ImageGalleryItem key={image.id} image={image} />
             ))}
@@ -19,5 +19,3 @@ ImageGallery.propTypes = {
         })
     ).isRequired,
 };
-
-export default ImageGallery;

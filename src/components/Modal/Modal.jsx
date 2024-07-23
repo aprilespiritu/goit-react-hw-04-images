@@ -1,31 +1,21 @@
-import React, { useEffect, useRef } from 'react';
+import Modal from 'react-modal';
 import css from './Modal.module.css';
 
-export const Modal = ({ image, tags, onClose }) = {
-    const onCloseRef = useRef(onClose);
-    
-    useEffect(() => {
-    onCloseRef.current = onClose;
-    }, [onClose]);
-    
-    useEffect(() => {
-        const handleKeyDown = e => {
-            if (e.code === 'Escape') {
-                onCloseRef.current();
-            }
-        };
+Modal.setAppElement('#root');
 
-        window.addEventListener('keydown', handleKeyDown);
-        return () => {
-            window.removeEventListener('keydown', handleKeyDown);
-        };
-    }, []);
-
+const SearchModal = ({ image, modalOpen, modalClose }) => {
     return (
-        <div className={css.overlay}>
+        <Modal
+            onRequestClose={modalClose}
+            isOpen={modalOpen}
+            contentLabel="Image Modal"
+            className={css.overlay}
+        >
             <div className={css.modal}>
                 <img src={image} alt={tags} />
             </div>
-        </div>
+        </Modal>   
     );
 };
+
+export default SearchModal;
