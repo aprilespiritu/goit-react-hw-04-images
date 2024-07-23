@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Modal from '../Modal/Modal';
 import css from './ImageGalleryItem.module.css';
