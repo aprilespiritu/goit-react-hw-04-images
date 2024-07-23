@@ -41,8 +41,7 @@ export const ImageProvider = ({ children }) => {
                 if (page === 1) {
                     toast.success(`Hooray! We found ${totalHits} images!`);
                 }
-
-                setImages(prev => (page === 1 ? hits : [...prev, ...hits]));
+                setImages(prevPage => (page === 1 ? hits : [...prevPage, ...hits]));
                 setIsEnd(page * 12 >= totalHits);
             } catch (error) {
                 setIsError(true);
@@ -76,7 +75,7 @@ export const ImageProvider = ({ children }) => {
 
     const handleLoadMore = () => {
         if (!isEnd) {
-            setPage(prev = prev + 1);
+            setPage(prevPage = prevPage + 1);
         } else {
             toast("You have reached the end of your search results.", {
                 icon: '👏',

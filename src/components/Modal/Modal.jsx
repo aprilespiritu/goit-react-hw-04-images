@@ -1,8 +1,7 @@
 import React, { useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
 import css from './Modal.module.css';
 
-const Modal = ({ image, tags, onClose }) = {
+export const Modal = ({ image, tags, onClose }) = {
     const onCloseRef = useRef(onClose);
     
     useEffect(() => {
@@ -30,11 +29,3 @@ const Modal = ({ image, tags, onClose }) = {
         </div>
     );
 };
-
-Modal.propTypes = {
-    image: PropTypes.string.isRequired,
-    tags: PropTypes.string,
-    onClose: PropTypes.func.isRequired,
-};
-
-export default Modal;

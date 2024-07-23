@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import css from './Searchbar.module.css';
 import { FaSearch } from 'react-icons/fa';
-import PropTypes from 'prop-types';
 
-const Searchbar = ({ onSubmit }) => {
+
+export const Searchbar = ({ onSubmit }) => {
     const [search, setSearch] = useState('');
 
     const handleChange = e => {

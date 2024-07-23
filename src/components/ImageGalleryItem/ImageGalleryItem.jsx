@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Modal from '../Modal/Modal';
 import css from './ImageGalleryItem.module.css';
-import { useToggle } from 'components/hooks/useToggle';
+import { useToggle } from 'hooks/useToggle';
 
 const ImageGalleryItem = ({ image }) => {
     const { webformatURL, largeImageURL, tags } = image;

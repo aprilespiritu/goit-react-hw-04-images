@@ -1,12 +1,11 @@
 import React from 'react';
-import Searchbar  from './Searchbar/Searchbar';
-import ImageGallery from './ImageGallery/ImageGallery';
+import { Searchbar } from './Searchbar/Searchbar';
+import { ImageGallery } from './ImageGallery/ImageGallery';
 import Button from './Button/Button';
 import Loader from './Loader/Loader';
-import { getAPI } from 'pixabay-api';
 import css from './App.module.css';
 import { Toaster } from 'react-hot-toast';
-import { useImages } from 'context/ImagesContext';
+import { useImages } from '../context/ImageContext';
 
 const App = () => {
   const {
