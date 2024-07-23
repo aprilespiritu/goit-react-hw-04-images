@@ -9,38 +9,31 @@ export const ImageGalleryItem = ({ image }) => {
     
     useEffect(() => {
         const gallery = document.querySelector('.js-gallery');
-    })
-            
-            if (!gallery) {
-                return;
-            }
 
-            if (this.state.showModal) {
-                console.log('Modal is now shown.');
-                gallery.style.pointerEvents = 'none';
-            } else {
-                console.log('Modal is now hidden.');
-                gallery.style.pointerEvents = 'auto';
-            }
+        if (!gallery) {
+            return;
         }
-    }
 
-    toggleModal = () => {
-        this.setState(prevState => ({
-            showModal: !prevState.showModal,
-        }));
+        if (showModal) {
+            console.log('Modal is now shown.');
+            gallery.style.pointerEvents = 'none';
+        } else {
+            console.log('Modal is now hidden.');
+            gallery.style.pointerEvents = 'auto';
+        }
+    }, [showModal]);
+    
+    const useToggle = (initialState = false) => {
+        const [showModal, setShowModal] = useState(initialState);
+        const toggle = () => setShowModal(!showModal);
+
+        return { showModal, toggle };
     };
 
-    render() {
-        const { webformatURL, largeImageURL, tags } = this.props.image;
-        const { showModal } = this.state;
-
-        return (
-            <li className={css.galleryItem} onClick={this.toggleModal}>
+    return (
+        <li className={css.galleryItem} onClick={toggle}>
                 <img src={webformatURL} alt={tags} />
-                {showModal && (<Modal image={largeImageURL} tags={tags} onClose={this.toggleModal} />)}
+                {showModal && (<Modal image={largeImageURL} tags={tags} onClose={toggle} />)}
             </li>
-        );
-    }
-}
-
+    );
+};
