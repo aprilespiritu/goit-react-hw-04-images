@@ -1,24 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Modal from '../Modal/Modal';
 import css from './ImageGalleryItem.module.css';
 
-export const ImageGalleryItem = ({ webformatURL, largeImageURL, tags }) => {
-    //static propTypes = {
-    //    image: PropTypes.shape({
-    //        webformatURL: PropTypes.string.isRequired,
-    //        largeImageURL: PropTypes.string.isRequired,
-    //        tags: PropTypes.string,
-    //    }).isRequired,
-    //};
-
-    state = {
-        showModal: false,
-    };
-
-    componentDidUpdate(_prevProps, prevState) {
-        if (prevState.showModal !== this.state.showModal) {
-            const gallery = document.querySelector('.js-gallery');
+export const ImageGalleryItem = ({ image }) => {
+    const { webformatURL, largeImageURL, tags } = image;
+    const { showModal, toggle } = useToggle();
+    
+    useEffect(() => {
+        const gallery = document.querySelector('.js-gallery');
+    })
+            
             if (!gallery) {
                 return;
             }
@@ -52,4 +44,3 @@ export const ImageGalleryItem = ({ webformatURL, largeImageURL, tags }) => {
     }
 }
 
-export default ImageGalleryItem;
