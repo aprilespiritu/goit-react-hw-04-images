@@ -4,8 +4,8 @@ import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Button } from './Button/Button';
 import { Loader } from './Loader/Loader';
 import css from './App.module.css';
-import toast, { Toaster } from 'react-hot-toast';
 import { getAPI } from 'pixabay-api';
+import toast, { Toaster } from 'react-hot-toast';
 
 export const App = () => {
   const [search, setSearch] = useState('');
@@ -55,7 +55,6 @@ export const App = () => {
           },
         });
       }
-
       // Update the state with the new images
       setImages(prevState => [...prevState, ...hits]);
     } catch {
@@ -65,7 +64,7 @@ export const App = () => {
     }
   };
 
-  const handleSearchSubmit = e => {
+  const handleSearch = e => {
     e.preventDefault();
 
     const newSearch = e.target.search.value.trim().toLowerCase();
@@ -90,14 +89,14 @@ export const App = () => {
   
   return (
     <div className={css.App}>
-      <Searchbar onSubmit={handleSearchSubmit} />
-      <ImageGallery images={images} />
+      <Searchbar onSubmit={handleSearch} />
+      {images.length >= 1 && <ImageGallery images={images} />}
       {isLoading && <Loader />}
       {!isLoading && !isError && images.length > 0 && !isEnd && (
         <Button onClick={handleLoadMore} />
       )}
       {isError && <p>Something went wrong. Please try again.</p>}
-      <Toaster position="top-right" reverseOrder={false} />
+      <Toaster position="top-right"/>
     </div>
   );
 };

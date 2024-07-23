@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import SearchModal from 'components/Modal/Modal';
 import css from './ImageGalleryItem.module.css';
@@ -20,12 +20,11 @@ export const ImageGalleryItem = ({ webformatURL, largeImageURL, tags }) => {
                 src={webformatURL}
                 alt={tags}
             />
-            {showModal && (
-                <SearchModal
-                    image={largeImageURL}
-                    tags={tags}
-                    onClose={handleModalClose}
-                />)}
+            <SearchModal
+                image={selectedImage}
+                modalOpen={selectedImage !== null}
+                modalClose={handleModalClose}
+            />
         </li>
     );
 };

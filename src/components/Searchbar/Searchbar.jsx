@@ -17,15 +17,13 @@ export const Searchbar = ({ onSubmit }) => {
                     autoComplete="off"
                     autoFocus
                     placeholder="Search images"
-                    value={search}
-                    onChange={handleChange}
+                    name="search"
                 />
             </form>
         </header>
     );
 };
 
-SearchBar.propTypes = {
+Searchbar.propTypes = {
     onSubmit: PropTypes.func.isRequired,
 };
-

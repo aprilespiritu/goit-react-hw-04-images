@@ -12,7 +12,7 @@ const SearchModal = ({ image, modalOpen, modalClose }) => {
             className={css.overlay}
         >
             <div className={css.modal}>
-                <img src={image} alt={tags} />
+                <img src={image} alt="" />
             </div>
         </Modal>   
     );
