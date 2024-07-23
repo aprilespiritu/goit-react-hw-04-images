@@ -5,8 +5,13 @@ import css from './ImageGallery.module.css';
 export const ImageGallery = ({ images }) => {
     return (
         <ul className={css.gallery}>
-            {images.map(image => (
-            <ImageGalleryItem key={image.id} image={image} />
+            {images.map(({ id, webformatURL, largeImageURL, tags }, index) => (
+                <ImageGalleryItem
+                    key={`${id}-${index}`}
+                    webformatURL={webformatURL}
+                    largeImageURL={largeImageURL}
+                    tags={tags}
+                />
             ))}
         </ul>
     );
